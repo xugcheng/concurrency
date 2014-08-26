@@ -1,4 +1,4 @@
-package pkg_21_2_2;
+package exercise_21_2_2;
 
 public class PrtTask implements Runnable {
 
