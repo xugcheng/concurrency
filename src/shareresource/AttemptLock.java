@@ -33,36 +33,34 @@ public class AttemptLock {
 		}
 	}
 	
-	public void interuptLock(){
-		try {
-			lock.lockInterruptibly();
-		} catch (InterruptedException e) {
-			System.out.println("lockInterruptibly was interrupted.");
-			lock.unlock();
-		}
-	}
-	
 	public static void main(String[] args) {
 		final AttemptLock attemptLock = new AttemptLock();
 		attemptLock.untimed();
 		attemptLock.timed();
-		//attemptLock.interuptLock();
 		new Thread(){
 			{setDaemon(true);}
 			@Override
 			public void run(){
-				attemptLock.lock.lock();
+				//attemptLock.lock.lock();
+				try {
+					attemptLock.lock.lockInterruptibly();
+				} catch (InterruptedException e1) {
+					e1.printStackTrace();
+				}
 				System.out.println("acquired");
+				try {
+					TimeUnit.SECONDS.sleep(5);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				attemptLock.lock.unlock();
 			}
 		}.start();
 		Thread.yield();
-		try {
-			TimeUnit.SECONDS.sleep(1);
-		} catch (InterruptedException e) {
-			System.out.println("sleep() interrupted.");
-		}
 		attemptLock.untimed();
 		attemptLock.timed();
+		
 	}
 	
 }
