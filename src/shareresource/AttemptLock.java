@@ -41,12 +41,12 @@ public class AttemptLock {
 			{setDaemon(true);}
 			@Override
 			public void run(){
-				//attemptLock.lock.lock();
-				try {
-					attemptLock.lock.lockInterruptibly();
-				} catch (InterruptedException e1) {
-					e1.printStackTrace();
-				}
+				attemptLock.lock.lock();
+//				try {
+//					attemptLock.lock.lockInterruptibly();
+//				} catch (InterruptedException e1) {
+//					e1.printStackTrace();
+//				}
 				System.out.println("acquired");
 				try {
 					TimeUnit.SECONDS.sleep(5);
