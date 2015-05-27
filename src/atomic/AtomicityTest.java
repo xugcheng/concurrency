@@ -1,5 +1,7 @@
 package atomic;
 
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -29,6 +31,14 @@ public class AtomicityTest implements Runnable{
 	}
 	
 	public static void main(String[] args) {
+		new Timer().schedule(new TimerTask() {
+			@Override
+			public void run() {
+				System.out.println("abort.");
+				System.exit(0);
+			}
+		}, 5000);
+		
 		AtomicityTest atomicityTest = new AtomicityTest();
 		ExecutorService exec = Executors.newCachedThreadPool();
 		exec.execute(atomicityTest);
